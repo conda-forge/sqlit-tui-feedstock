@@ -30,6 +30,7 @@ requirements:
     - tree_sitter
     - tree_sitter_languages
     - textual-fastdatatable >=0.14.0
+    - pyperclip >=1.8.2
     - keyring >=24.0.0
     - docker-py >=7.0.0
     - sqlparse >=0.5.0
