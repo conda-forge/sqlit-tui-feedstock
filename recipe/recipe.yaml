@@ -1,5 +1,5 @@
 context:
-  version: 1.1.6
+  version: "1.1.13"
 
 package:
   name: sqlit-tui
@@ -7,7 +7,7 @@ package:
 
 source:
   - url: https://pypi.org/packages/source/s/sqlit-tui/sqlit_tui-${{ version }}.tar.gz
-    sha256: 82a01f08a71cdfe7db95aa52758c40987c75c279a3b3db3afbd9e16c20525367
+    sha256: 39e34360d8c168374986785020d6094a427a1423cfae27ccedf9f295195dbcd8
 
 build:
   number: 0
@@ -25,14 +25,15 @@ requirements:
     - pip
   run:
     - python >=${{ python_min }}
-    - docker-py >=7.0.0
-    - keyring >=24.0.0
-    - pyperclip >=1.8.2
-    - textual-fastdatatable >=0.14.0
     - textual >=6.10.0
     # for textual[syntax], has run_constrained on textual:
     - tree_sitter
     - tree_sitter_languages
+    - textual-fastdatatable >=0.14.0
+    - pyperclip >=1.8.2
+    - keyring >=24.0.0
+    - docker-py >=7.0.0
+    - sqlparse >=0.5.0
 
 tests:
   - python:
@@ -41,7 +42,7 @@ tests:
       pip_check: true
       python_version: ${{ python_min }}.*
   - script:
-    - sqlit --help
+      - sqlit --help
 
 about:
   summary: The lazygit of SQL databases
