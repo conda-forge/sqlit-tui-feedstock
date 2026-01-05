@@ -29,6 +29,7 @@ requirements:
     # for textual[syntax], has run_constrained on textual:
     - tree_sitter
     - tree_sitter_languages
+    # - tree-sitter-sql
     - textual-fastdatatable >=0.14.0
     - pyperclip >=1.8.2
     - keyring >=24.0.0
@@ -43,6 +44,9 @@ tests:
       python_version: ${{ python_min }}.*
   - script:
       - sqlit --help
+  - script:
+      # Force-kill after 5 seconds, because it is a TUI
+      - timeout 5s sqlit --mock=sqlite-demo || true
 
 about:
   summary: The lazygit of SQL databases
