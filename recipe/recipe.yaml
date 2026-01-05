@@ -46,7 +46,10 @@ tests:
       - sqlit --help
   - script:
       # Force-kill after 5 seconds, because it is a TUI
-      - timeout 5s sqlit --mock=sqlite-demo || true
+      - set -o pipefail
+      - timeout 5s sqlit --mock=sqlite-demo 2>&1 | tee output.log
+      - grep -iE "traceback|error|exception" output.log && exit 1 || true
+
 
 about:
   summary: The lazygit of SQL databases
