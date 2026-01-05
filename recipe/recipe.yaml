@@ -29,7 +29,7 @@ requirements:
     # for textual[syntax], has run_constrained on textual:
     - tree_sitter
     - tree_sitter_languages
-    # - tree-sitter-sql
+    - tree-sitter-sql
     - textual-fastdatatable >=0.14.0
     - pyperclip >=1.8.2
     - keyring >=24.0.0
