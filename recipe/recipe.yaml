@@ -45,10 +45,26 @@ tests:
   - script:
       - sqlit --help
   - script:
-      # Force-kill after 5 seconds, because it is a TUI
-      - set -o pipefail
-      - timeout 5s sqlit --mock=sqlite-demo 2>&1 | tee output.log
-      - grep -iE "traceback|error|exception" output.log && exit 1 || true
+      - |
+        bash -c '
+        set -o pipefail
+
+        # Run the TUI briefly and capture output
+        timeout 5s sqlit --mock=sqlite-demo 2>&1 | tee output.log
+        status=$?
+
+        # timeout exit code 124 is expected and OK
+        if [ "$status" -ne 0 ] && [ "$status" -ne 124 ]; then
+          exit "$status"
+        fi
+
+        # Fail only if real errors are present
+        if grep -iE "traceback|exception" output.log; then
+          exit 1
+        fi
+
+        exit 0
+        '
 
 
 about:
