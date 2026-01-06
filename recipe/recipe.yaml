@@ -1,5 +1,5 @@
 context:
-  version: "1.2.0.1"
+  version: "1.2.0.2"
 
 package:
   name: sqlit-tui
@@ -7,7 +7,7 @@ package:
 
 source:
   - url: https://pypi.org/packages/source/s/sqlit-tui/sqlit_tui-${{ version }}.tar.gz
-    sha256: 044d304572e4e1ef7139caa52ea7b5f4d058d29bc6b86e04fa7121375db7e99c
+    sha256: e41f920ea13df6ec39276d9decda1d5c1bf133a9eeab217de9991eab90bf001d
 
 build:
   number: 0
@@ -29,6 +29,7 @@ requirements:
     # for textual[syntax], has run_constrained on textual:
     - tree_sitter
     - tree_sitter_languages
+    - tree-sitter-sql
     - textual-fastdatatable >=0.14.0
     - pyperclip >=1.8.2
     - keyring >=24.0.0
@@ -43,6 +44,28 @@ tests:
       python_version: ${{ python_min }}.*
   - script:
       - sqlit --help
+  - script:
+      - |
+        bash -c '
+        set -o pipefail
+
+        # Run the TUI briefly and capture output
+        timeout 5s sqlit --mock=sqlite-demo 2>&1 | tee output.log
+        status=$?
+
+        # timeout exit code 124 is expected and OK
+        if [ "$status" -ne 0 ] && [ "$status" -ne 124 ]; then
+          exit "$status"
+        fi
+
+        # Fail only if real errors are present
+        if grep -iE "traceback|exception" output.log; then
+          exit 1
+        fi
+
+        exit 0
+        '
+
 
 about:
   summary: The lazygit of SQL databases
