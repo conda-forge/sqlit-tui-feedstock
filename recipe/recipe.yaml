@@ -1,5 +1,5 @@
 context:
-  version: "1.6.4"
+  version: "1.6.5"
 
 package:
   name: sqlit-tui
@@ -7,7 +7,7 @@ package:
 
 source:
   - url: https://pypi.org/packages/source/s/sqlit-tui/sqlit_tui-${{ version }}.tar.gz
-    sha256: 7f7058b062c0e868bde867047928283909abaa27eb9bb527603b83fe71bdf1d6
+    sha256: 5c842c47ac9e6e66a6bbd6bf8e279d1b5f7df1c5ab10980ce25c1f3aaa7af0ee
 
 build:
   number: 0
